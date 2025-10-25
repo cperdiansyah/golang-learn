@@ -24,4 +24,11 @@ func main() {
 	for _, v := range xs {
 		println("angka", v)
 	}
+
+	for n := range 6 {
+		if n%2 == 0 {
+			continue
+		}
+		fmt.Println(n)
+	}
 }
