@@ -26,7 +26,7 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	/* Panggil Service Layer */
-	id, err := h.service.CreateProduct(r.Context(), req)
+	product, err := h.service.CreateProduct(r.Context(), req)
 	if err != nil {
 		// log error di server
 		fmt.Println("error service", err)
@@ -35,7 +35,5 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	/* Return succes response */
-	api.SuccessResponse(w, http.StatusCreated, "Product berhasil dibuat", map[string]int{
-		"id": id,
-	})
+	api.SuccessResponse(w, http.StatusCreated, "Product berhasil dibuat", product)
 }

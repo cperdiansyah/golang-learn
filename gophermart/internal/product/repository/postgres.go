@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strconv"
 
 	"github.com/cperdiansyah/gophermart/internal/product/entity"
 )
@@ -22,9 +23,7 @@ func (r *PostgresRepository) Save(ctx context.Context, p *entity.Product) error 
 	//QueryRowContext dipake kalau kita mau dapet balikan data (ID yang baru kebuat)
 	//QueryRowContext mengembalikan 1 baris data
 	//QueryContext mengembalikan banyak baris data
-
 	err := r.db.QueryRowContext(ctx, query, p.Name, p.Price, p.Stock, p.CreatedAt, p.UpdatedAt).Scan(&p.ID)
-
 	if err != nil {
 		return fmt.Errorf("gagal insert product: %w", err)
 	}
@@ -60,14 +59,18 @@ func (r *PostgresRepository) FindAll(ctx context.Context) ([]entity.Product, err
 	return products, nil
 }
 
-func (r *PostgresRepository) FindByID(ctx context.Context, id int) (*entity.Product, error) {
+func (r *PostgresRepository) FindByID(ctx context.Context, id string) (*entity.Product, error) {
 	query := `
 	SELECT id, name, price, stock, created_at, updated_at
 	FROM products
 	WHERE id = $1
 	 `
 	var p entity.Product
-	err := r.db.QueryRowContext(ctx, query, id).Scan(
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, fmt.Errorf("invalid ID format: %w", err)
+	}
+	err = r.db.QueryRowContext(ctx, query, idInt).Scan(
 		&p.ID,
 		&p.Name,
 		&p.Price,
@@ -85,7 +88,7 @@ func (r *PostgresRepository) FindByID(ctx context.Context, id int) (*entity.Prod
 	return &p, nil
 }
 
-func (r *PostgresRepository) Update(ctx context.Context, p *entity.Product) error {
+func (r *PostgresRepository) Update(ctx context.Context, p *entity.Product) (entity.Product, error) {
 	query := `
 	UPDATE products
 	SET name=$1, price=$2, stock=$3, updated_at=$4
@@ -93,23 +96,27 @@ func (r *PostgresRepository) Update(ctx context.Context, p *entity.Product) erro
 	`
 	result, err := r.db.ExecContext(ctx, query, p.Name, p.Price, p.Stock, p.UpdatedAt, p.ID)
 	if err != nil {
-		return fmt.Errorf("gagal update : %w", err)
+		return entity.Product{}, fmt.Errorf("gagal update : %w", err)
 	}
 	rows, _ := result.RowsAffected()
 	if rows == 0 {
-		return fmt.Errorf("Product dengan id %d tidak ditemukan", p.ID)
+		return entity.Product{}, fmt.Errorf("Product dengan id %d tidak ditemukan", p.ID)
 	}
-	return nil
+	return *p, nil
 }
 
-func (r *PostgresRepository) Delete(ctx context.Context, id int) error {
+func (r *PostgresRepository) Delete(ctx context.Context, id string) (string, error) {
 	query := `
 		DELETE FROM products
 		WHERE id = $1
 	`
-	_, err := r.db.ExecContext(ctx, query, id)
+	idInt, err := strconv.Atoi(id)
 	if err != nil {
-		return fmt.Errorf("Gagal delete:%w", err)
+		return "", fmt.Errorf("invalid ID format: %w", err)
 	}
-	return nil
+	_, err = r.db.ExecContext(ctx, query, idInt)
+	if err != nil {
+		return "", fmt.Errorf("Gagal delete:%w", err)
+	}
+	return id, nil
 }
