@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cperdiansyah/gophermart/internal/product/entity"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/entity"
 )
 
 func (s *productService) Update(ctx context.Context, req entity.UpdateProductRequest, id string) (entity.Product, error) {

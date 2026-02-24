@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"github.com/cperdiansyah/gophermart/internal/product/service"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/service"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 )
 
-// import "github.com/cperdiansyah/gophermart/internal/product/service"
+// import "github.com/cperdiansyah/gophermart/internal/modules/product/service"
 
 // product handler struct menyimpan deps yang dibutuhkan
 type ProductHandler struct {

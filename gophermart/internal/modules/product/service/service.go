@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/cperdiansyah/gophermart/internal/product/entity"
-	"github.com/cperdiansyah/gophermart/internal/product/repository"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/entity"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/repository"
 )
 
 type Service interface {

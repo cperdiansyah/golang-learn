@@ -25,11 +25,12 @@ gophermart/
 │   ├── api/                  # Global unified response formatters
 │   ├── config/               # .env loader and environment structures
 │   ├── infrastructure/       # Database Connection drivers (PostgreSQL)
-│   ├── product/              # The "Product" Domain Feature
-│   │   ├── entity/           # Structs, validation tags, Domain Models (Create/Update rules)
-│   │   ├── handler/          # HTTP Request parsing & mapping (Presentation)
-│   │   ├── repository/       # PostgreSQL queries and raw data interaction
-│   │   └── service/          # Core Business logic
+│   ├── modules/              # Domain features grouped together
+│   │   └── product/          # The "Product" Domain Feature
+│   │       ├── entity/       # Structs, validation tags, Domain Models (Create/Update rules)
+│   │       ├── handler/      # HTTP Request parsing & mapping (Presentation)
+│   │       ├── repository/   # PostgreSQL queries and raw data interaction
+│   │       └── service/      # Core Business logic
 │   └── utils/                # DRY utility functions (e.g., param parsing)
 ├── .env.example              # Example environments
 └── Makefile                  # Development tooling commands

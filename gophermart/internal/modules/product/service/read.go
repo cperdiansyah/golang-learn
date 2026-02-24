@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cperdiansyah/gophermart/internal/product/entity"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/entity"
 )
 
 func (s *productService) FindAll(ctx context.Context, limit int, offset int) ([]entity.Product, error) {

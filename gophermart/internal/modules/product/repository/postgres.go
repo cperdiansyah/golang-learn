@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/cperdiansyah/gophermart/internal/product/entity"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/entity"
 )
 
 type PostgresRepository struct {

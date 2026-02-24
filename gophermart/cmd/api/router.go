@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/cperdiansyah/gophermart/internal/api"
-	"github.com/cperdiansyah/gophermart/internal/product/handler"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/handler"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/cperdiansyah/gophermart/internal/api"
-	"github.com/cperdiansyah/gophermart/internal/product/entity"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/entity"
 	"github.com/cperdiansyah/gophermart/internal/utils"
 )
 

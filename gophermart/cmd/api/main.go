@@ -11,9 +11,9 @@ import (
 
 	"github.com/cperdiansyah/gophermart/internal/config"
 	"github.com/cperdiansyah/gophermart/internal/infrastructure"
-	"github.com/cperdiansyah/gophermart/internal/product/handler"
-	"github.com/cperdiansyah/gophermart/internal/product/repository"
-	"github.com/cperdiansyah/gophermart/internal/product/service"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/handler"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/repository"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/service"
 	"github.com/go-playground/validator/v10"
 )
 

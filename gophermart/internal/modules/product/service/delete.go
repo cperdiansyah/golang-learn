@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cperdiansyah/gophermart/internal/product/entity"
+	"github.com/cperdiansyah/gophermart/internal/modules/product/entity"
 )
 
 func (s *productService) Delete(ctx context.Context, id string) (string, error) {
