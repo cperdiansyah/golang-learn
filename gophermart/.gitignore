@@ -1,0 +1,26 @@
+# Go Workspace
+bin/
+pkg/
+obj/
+*.out
+
+# Project Binaries
+/gophermart
+/api
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Test output
+cover.out
+coverage.html
