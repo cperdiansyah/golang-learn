@@ -26,7 +26,7 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	/* Panggil Service Layer */
-	product, err := h.service.CreateProduct(r.Context(), req)
+	product, err := h.service.Save(r.Context(), req)
 	if err != nil {
 		// log error di server
 		fmt.Println("error service", err)

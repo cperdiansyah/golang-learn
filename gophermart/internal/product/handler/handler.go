@@ -25,6 +25,9 @@ func NewProductHandler(s service.Service, v *validator.Validate) *ProductHandler
 func (h *ProductHandler) Routes() chi.Router {
 	r := chi.NewRouter()
 	r.Post("/", h.CreateProduct)
-	// r.Get("/", h.GetAllProducts)
+	r.Get("/", h.GetAllProduct)
+	r.Get("/{id}", h.GetProductByID)
+	r.Put("/{id}", h.UpdateProduct)
+	r.Delete("/{id}", h.DeleteProduct)
 	return r
 }

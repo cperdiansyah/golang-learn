@@ -30,12 +30,15 @@ func (r *PostgresRepository) Save(ctx context.Context, p *entity.Product) error 
 	return nil
 }
 
-func (r *PostgresRepository) FindAll(ctx context.Context) ([]entity.Product, error) {
+func (r *PostgresRepository) FindAll(ctx context.Context, limit int, offset int) ([]entity.Product, error) {
 	query := `
-	SELECT id, name, price, stock, created_at, updated_at
+	SELECT id, name, price, stock, created_at, updated_at, deleted_at
 	From products
+	WHERE deleted_at IS NULL
+	ORDER BY created_at DESC
+	LIMIT $1 OFFSET $2
 	`
-	rows, err := r.db.QueryContext(ctx, query)
+	rows, err := r.db.QueryContext(ctx, query, limit, offset)
 
 	if err != nil {
 		return nil, fmt.Errorf("Gagal query find all : %w", err)
@@ -46,7 +49,7 @@ func (r *PostgresRepository) FindAll(ctx context.Context) ([]entity.Product, err
 	var products []entity.Product
 	for rows.Next() {
 		var p entity.Product
-		if err := rows.Scan(&p.ID, &p.Name, &p.Price, &p.Stock, &p.CreatedAt, &p.UpdatedAt); err != nil {
+		if err := rows.Scan(&p.ID, &p.Name, &p.Price, &p.Stock, &p.CreatedAt, &p.UpdatedAt, &p.DeletedAt); err != nil {
 			return nil, fmt.Errorf("Gagal scan product : %w", err)
 		}
 		products = append(products, p)
@@ -61,9 +64,9 @@ func (r *PostgresRepository) FindAll(ctx context.Context) ([]entity.Product, err
 
 func (r *PostgresRepository) FindByID(ctx context.Context, id string) (*entity.Product, error) {
 	query := `
-	SELECT id, name, price, stock, created_at, updated_at
+	SELECT id, name, price, stock, created_at, updated_at, deleted_at
 	FROM products
-	WHERE id = $1
+	WHERE id = $1 AND deleted_at IS NULL
 	 `
 	var p entity.Product
 	idInt, err := strconv.Atoi(id)
@@ -77,6 +80,7 @@ func (r *PostgresRepository) FindByID(ctx context.Context, id string) (*entity.P
 		&p.Stock,
 		&p.CreatedAt,
 		&p.UpdatedAt,
+		&p.DeletedAt,
 	)
 
 	if err == sql.ErrNoRows {
@@ -107,7 +111,8 @@ func (r *PostgresRepository) Update(ctx context.Context, p *entity.Product) (ent
 
 func (r *PostgresRepository) Delete(ctx context.Context, id string) (string, error) {
 	query := `
-		DELETE FROM products
+		UPDATE products
+		SET deleted_at = NOW()
 		WHERE id = $1
 	`
 	idInt, err := strconv.Atoi(id)

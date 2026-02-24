@@ -7,16 +7,16 @@ import (
 	"github.com/cperdiansyah/gophermart/internal/product/entity"
 )
 
-func (s *productService) GetAllProduct(ctx context.Context) ([]entity.Product, error) {
+func (s *productService) FindAll(ctx context.Context, limit int, offset int) ([]entity.Product, error) {
 
-	products, err := s.repo.FindAll(ctx)
+	products, err := s.repo.FindAll(ctx, limit, offset)
 	if err != nil {
 		return nil, fmt.Errorf("gagal get all product : %w", err)
 	}
 	return products, nil
 }
 
-func (s *productService) GetProductByID(ctx context.Context, id string) (*entity.Product, error) {
+func (s *productService) FindByID(ctx context.Context, id string) (*entity.Product, error) {
 	product, err := s.repo.FindByID(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("gagal get product by id : %w", err)

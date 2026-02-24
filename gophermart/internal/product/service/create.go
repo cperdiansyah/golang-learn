@@ -9,7 +9,7 @@ import (
 	"github.com/cperdiansyah/gophermart/internal/product/entity"
 )
 
-func (s *productService) CreateProduct(ctx context.Context, req entity.CreateProductRequest) (entity.Product, error) {
+func (s *productService) Save(ctx context.Context, req entity.CreateProductRequest) (entity.Product, error) {
 	// Validation
 	if req.Price <= 0 {
 		return entity.Product{}, errors.New("Harga tidak boleh nol atau negatif")

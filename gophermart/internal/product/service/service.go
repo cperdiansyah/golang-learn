@@ -8,11 +8,11 @@ import (
 )
 
 type Service interface {
-	CreateProduct(ctx context.Context, req entity.CreateProductRequest) (entity.Product, error)
-	GetAllProduct(ctx context.Context) ([]entity.Product, error)
-	GetProductByID(ctx context.Context, id string) (*entity.Product, error)
-	UpdateProduct(ctx context.Context, req entity.CreateProductRequest, id string) (entity.Product, error)
-	DeleteProduct(ctx context.Context, id string) (string, error)
+	Save(ctx context.Context, req entity.CreateProductRequest) (entity.Product, error)
+	FindAll(ctx context.Context, limit int, offset int) ([]entity.Product, error)
+	FindByID(ctx context.Context, id string) (*entity.Product, error)
+	Update(ctx context.Context, req entity.UpdateProductRequest, id string) (entity.Product, error)
+	Delete(ctx context.Context, id string) (string, error)
 }
 
 type productService struct {
